@@ -1,0 +1,96 @@
+#!/bin/sh
+###########################################################
+# This script is used to convert markdown                 #
+# files in current to html files in a new tree.           #
+# it also resolve and trasform all links in the documents #
+###########################################################
+
+usage () {
+echo "
+This script create static html website
+from markdown:
+
+$0 [SOURCE] [TARGET] [STATIC_DIR]
+
+The default target was created in the source directory
+under $DEFAULT_OUTPUT"
+}
+
+case "$1" in
+    "--help" | "-h") usage; exit 0 ;;
+    "") usage; exit 1 ;;
+esac
+
+########################################
+
+SOURCE_DIR=$1
+DEST_DIR=${2:-"./build"}
+STATIC_DIR=${3:-$SOURCE_DIR/static}
+
+SRC_SUFFIX=.md
+DST_SUFFIX=.html
+TEMPLATE=./templates/template.html
+
+########################################
+
+SMU=./lib/smu/smu
+SRC_FILES=$(find $SOURCE_DIR -type f -name "*$SRC_SUFFIX")
+
+# This function used for substrings extraction is a 
+# bit tricky. I don't have found another alternative 
+# to maintain the posix compatibility
+tricky_links_find() {
+    dst_file=$1
+    # split every link to a newline and print only the
+    # pattern space (to solve the greedy quantifier problem)
+    sed -n '/<a href/ s/<a/\n<a/pg' $dst_file | \
+    sed -n 's/.*<a href="\(.*\)">.*/\1/p'
+}
+
+print_header() {
+    header_line=$(grep -n "<body>" $TEMPLATE | cut -d':' -f1)
+    # print the template header
+    head -$header_line $TEMPLATE
+}
+
+print_footer() {
+    footer_line=$(grep -n "</body>" $TEMPLATE | cut -d':' -f1)
+    # print the template footer
+    tail +$footer_line $TEMPLATE
+}
+
+build_file() {
+    src_file=$1
+    dst_file=$2
+    # if not exist create directory path
+    if [ ! -d $(dirname $dst_file) ]; then
+        mkdir -p $(dirname $dst_file);
+    fi
+    # build the file
+    print_header > $dst_file
+    $SMU $src_file >> $dst_file
+    print_footer >> $dst_file
+}
+
+build_links() {
+    dst_file=$1
+    links_found=$(tricky_links_find $dst_file)
+    # Replace links suffix if href point to a file in SOURCE_DIR
+    for link_found in $links_found; do
+        if [ -f $SOURCE_DIR/$link_found ] ; then
+            new_link=${link_found%%$SRC_SUFFIX}$DST_SUFFIX
+            sed -i "s|$link_found|$new_link|g" "$dst_file"
+        fi
+    done
+}
+
+# Build all files
+for src_file in $SRC_FILES; do
+    dst_path=$DEST_DIR/${src_file#$SOURCE_DIR}
+    dst_file=${dst_path%%$SRC_SUFFIX}$DST_SUFFIX
+    build_file $src_file $dst_file
+    build_links $dst_file
+done
+
+# Copy static dir
+cp -a $STATIC_DIR $DEST_DIR/
