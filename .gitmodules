@@ -1,0 +1,6 @@
+[submodule "lib/sfi"]
+	path = lib/sfi
+	url = https://github.com/bomboclat/sfi.git
+[submodule "lib/smu"]
+	path = lib/smu
+	url = https://github.com/Gottox/smu.git
