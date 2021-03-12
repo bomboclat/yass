@@ -1,7 +1,7 @@
 #!/bin/sh
 ###########################################################
 # This script is used to convert markdown                 #
-# files in current to html files in a new tree.           #
+# files to html files in a new tree.                      #
 # it also resolve and trasform all links in the documents #
 ###########################################################
 
@@ -29,11 +29,11 @@ STATIC_DIR=${3:-$SOURCE_DIR/static}
 
 SRC_SUFFIX=.md
 DST_SUFFIX=.html
-TEMPLATE=./templates/template.html
-
-########################################
 
 SMU=./lib/smu/smu
+SFI=./lib/sfi/sfi
+
+########################################
 SRC_FILES=$(find $SOURCE_DIR -type f -name "*$SRC_SUFFIX")
 
 # This function used for substrings extraction is a 
@@ -47,18 +47,6 @@ tricky_links_find() {
     sed -n 's/.*<a href="\(.*\)">.*/\1/p'
 }
 
-print_header() {
-    header_line=$(grep -n "<body>" $TEMPLATE | cut -d':' -f1)
-    # print the template header
-    head -$header_line $TEMPLATE
-}
-
-print_footer() {
-    footer_line=$(grep -n "</body>" $TEMPLATE | cut -d':' -f1)
-    # print the template footer
-    tail +$footer_line $TEMPLATE
-}
-
 build_file() {
     src_file=$1
     dst_file=$2
@@ -67,9 +55,7 @@ build_file() {
         mkdir -p $(dirname $dst_file);
     fi
     # build the file
-    print_header > $dst_file
-    $SMU $src_file >> $dst_file
-    print_footer >> $dst_file
+    $SFI $src_file | $SMU > $dst_file
 }
 
 build_links() {
