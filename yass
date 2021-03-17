@@ -29,9 +29,8 @@ STATIC_DIR=${3:-$SOURCE_DIR/static}
 
 SRC_SUFFIX=.md
 DST_SUFFIX=.html
-
-SMU=./lib/smu/smu
-SFI=./lib/sfi/sfi
+SMU=$(dirname $0)/lib/smu/smu
+SFI=$(dirname $0)/lib/sfi/sfi
 
 ########################################
 SRC_FILES=$(find $SOURCE_DIR -type f -name "*$SRC_SUFFIX")
