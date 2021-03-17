@@ -55,15 +55,16 @@ build_file() {
         mkdir -p $(dirname $dst_file);
     fi
     # build the file
-    $SFI $src_file | $SMU > $dst_file
+    $SMU $src_file | $SFI $(dirname $src_file)/template.html > $dst_file
 }
 
 build_links() {
-    dst_file=$1
+    src_file=$1
+    dst_file=$2
     links_found=$(tricky_links_find $dst_file)
     # Replace links suffix if href point to a file in SOURCE_DIR
     for link_found in $links_found; do
-        if [ -f $SOURCE_DIR/$link_found ] ; then
+        if [ -f $(dirname $src_file)/$link_found ]; then
             new_link=${link_found%%$SRC_SUFFIX}$DST_SUFFIX
             sed -i "s|$link_found|$new_link|g" "$dst_file"
         fi
@@ -75,7 +76,7 @@ for src_file in $SRC_FILES; do
     dst_path=$DEST_DIR/${src_file#$SOURCE_DIR}
     dst_file=${dst_path%%$SRC_SUFFIX}$DST_SUFFIX
     build_file $src_file $dst_file
-    build_links $dst_file
+    build_links $src_file $dst_file
 done
 
 # Copy static dir
