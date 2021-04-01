@@ -3,6 +3,9 @@
 # This script is used to convert markdown                 #
 # files to html files in a new tree.                      #
 # it also resolve and trasform all links in the documents #
+#                                                         #
+# Copyright (C) <2021> Andrea Galletti                    #
+# See LICENSE for further informations                    #
 ###########################################################
 
 usage () {
