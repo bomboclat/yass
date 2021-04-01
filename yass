@@ -64,7 +64,7 @@ build_links() {
     # Replace links suffix if href point to a file in SOURCE_DIR
     for link_found in $links_found; do
         if [ -f $(dirname $src_file)/$link_found ]; then
-            new_link=${link_found%%$SRC_SUFFIX}$DST_SUFFIX
+            new_link=${link_found%$SRC_SUFFIX}$DST_SUFFIX
             sed -i "s|$link_found|$new_link|g" "$dst_file"
         fi
     done
@@ -73,7 +73,7 @@ build_links() {
 # Build all files
 for src_file in $SRC_FILES; do
     dst_path=$DEST_DIR/${src_file#$SOURCE_DIR}
-    dst_file=${dst_path%%$SRC_SUFFIX}$DST_SUFFIX
+    dst_file=${dst_path%$SRC_SUFFIX}$DST_SUFFIX
     build_file $src_file $dst_file
     build_links $src_file $dst_file
 done
