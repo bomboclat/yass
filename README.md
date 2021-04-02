@@ -1,6 +1,6 @@
 # YASS - Yet Another Static Site (generator)
 
-Yass is a minimal static site generator written in ~80 lines of shellscript.
+Yass is a minimal static site generator written in few lines of shellscript.
 It uses standard unix tools and has only two external deps: [sfi](https://github.com/bomboclat/sfi) and [smu](https://github.com/Gottox/smu). 
 
 Detailed **how-to** guide at [https://artic.nu/articles/yass.html](https://artic.nu/articles/yass.html)

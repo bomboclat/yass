@@ -33,6 +33,11 @@ SMU=$(dirname $0)/lib/smu/smu
 SFI=$(dirname $0)/lib/sfi/sfi
 
 ########################################
+# Check if sfi and smu are already installed
+# in the system and if is true use the system version
+SMU=$($(smu /dev/null 2> /dev/null && echo smu)||echo $SMU)
+SFI=$($(sfi /dev/null 2> /dev/null && echo sfi)||echo $SFI)
+
 SRC_FILES=$(find $SOURCE_DIR -type f -name "*$SRC_SUFFIX")
 
 # This function used for substrings extraction is a 
