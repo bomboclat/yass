@@ -3,6 +3,8 @@
 Yass is a minimal static site generator written in few lines of shellscript.
 It uses standard unix tools and has only two external deps: [sfi](https://github.com/bomboclat/sfi) and [smu](https://github.com/Gottox/smu). 
 
+![yass](https://media.giphy.com/media/8JVjMCr3OIAhO/giphy.gif)
+
 Detailed **how-to** guide at [https://artic.nu/articles/yass.html](https://artic.nu/articles/yass.html)
 
 ### Deps:
