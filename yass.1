@@ -1,0 +1,33 @@
+.TH yass 1 yass\-VERSION
+.SH NAME
+yass \- Yet Another Static Site (generator)
+.SH SYNOPSIS
+.B yass
+.RB [ SOURCE\ DIR ]
+.RB [ TARGET\ DIR ]
+.RB [ STATIC\ DIR ]
+.SH DESCRIPTION
+yass is a minimal static site generator written in few lines of shellscript.
+.SH OPTIONS
+.TP
+.B SOURCE\ DIR
+Yass will compile the website from
+.B SOURCE\ DIR
+
+Default: './src'
+.TP
+.B TARGET\ DIR
+Yass will place the compiled output in the
+.B TARGET\ DIR
+
+Default: './build'
+.TP
+.B STATIC\ DIR
+If exists Yass copy the
+.B STATIC\ DIR
+into the
+.B TARGET\ DIR
+
+Default: './src/static'
+.SH BUGS
+Please report any Bugs to https://github.com/bomboclat/yass/issues or via mail.
