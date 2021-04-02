@@ -1,0 +1,15 @@
+.menu {
+	font-size: 18px;
+	padding: 0;
+	margin: 0 auto 30px;
+}
+.menu li {
+	display: inline-block;
+}
+.menu h3 {
+	margin: 0;
+	font-weight: normal;
+}
+.menu a {
+	padding: 4px;
+}
