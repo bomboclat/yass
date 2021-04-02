@@ -9,14 +9,11 @@
 ###########################################################
 
 usage () {
-echo "
-This script create static html website
-from markdown:
+echo "This script create static html website:
 
 $0 [SOURCE] [TARGET] [STATIC_DIR]
 
-The default target was created in the source directory
-under $DEFAULT_OUTPUT"
+The default output dir is './build'"
 }
 
 case "$1" in
@@ -82,4 +79,8 @@ for src_file in $SRC_FILES; do
 done
 
 # Copy static dir
-cp -a $STATIC_DIR $DEST_DIR/
+if [ ! -d $STATIC_DIR ]; then
+    echo "Cannot find static dir: $STATIC_DIR, skipping..."
+else
+    cp -a $STATIC_DIR $DEST_DIR/
+fi
