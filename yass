@@ -70,7 +70,7 @@ build_links() {
     for link_found in $links_found; do
         if [ -f $(dirname $src_file)/$link_found ]; then
             new_link=${link_found%$SRC_SUFFIX}$DST_SUFFIX
-            sed -i "s|$link_found|$new_link|g" "$dst_file"
+            sed -i "s|href=\"$link_found\"|href=\"$new_link\"|g" "$dst_file"
         fi
     done
 }
