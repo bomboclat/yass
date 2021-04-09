@@ -1,6 +1,6 @@
 # Top level makefile.
 
-VERSION = 1.0
+VERSION = 1.1
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 
